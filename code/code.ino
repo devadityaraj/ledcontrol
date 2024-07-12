@@ -95,5 +95,5 @@ void loop() {
     Serial.println(firebaseData.errorReason());
   }
 
-  delay(10); // Adjust the delay as needed
+  delay(200); // Adjust the delay as needed
 }
