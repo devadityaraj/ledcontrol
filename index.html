@@ -144,7 +144,6 @@ const firebaseConfig = {
       });
 }
 */
-
 function toggleValue(key) {
       const ref = database.ref(key);
       ref.once('value').then((snapshot) => {
@@ -153,7 +152,24 @@ function toggleValue(key) {
         ref.set(newValue);
       });
     }
+
+    database.ref('Value3').on('value', (snapshot) => {
+            const value = snapshot.val();
+            const checkbox = document.getElementById('checkbox3');
+            checkbox.checked = value === 1;
+        });
     
+        database.ref('Value2').on('value', (snapshot) => {
+            const value = snapshot.val();
+            const checkbox = document.getElementById('checkbox2');
+            checkbox.checked = value === 1;
+        });
+
+        database.ref('Value1').on('value', (snapshot) => {
+            const value = snapshot.val();
+            const checkbox = document.getElementById('checkbox1');
+            checkbox.checked = value === 1;
+        });
   </script>
 </body>
 </html>
