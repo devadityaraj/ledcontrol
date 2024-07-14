@@ -5,8 +5,8 @@
 
 
 // Set these to your Firebase project credentials
-#define WIFI_SSID "FS-0A98" //ssid
-#define WIFI_PASSWORD "12345678"  //password
+#define WIFI_SSID "Galgotias-H" //ssid
+#define WIFI_PASSWORD ""  //password (blank for no password)
 #define API_KEY "AIzaSyCZTx5qW355GSRTDeprdvP-a9Akzy79rwI"
 #define DATABASE_URL "https://esp-74hc959n-3led-control-default-rtdb.asia-southeast1.firebasedatabase.app"
 #define USER_EMAIL "aditya@4net.in"
