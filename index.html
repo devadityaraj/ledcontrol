@@ -79,7 +79,7 @@
 </head>
 <body>
     <div class = "container">
-  <h1>LED Control</h1>
+  <h1>LED3</h1>
   <div>
     <input id="checkbox1" type="checkbox" onclick="toggleValue('Value1')" />
     <label class="switch" for="checkbox1">
@@ -134,16 +134,9 @@ const firebaseConfig = {
 
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
-
- /*  
-     function toggleLED(led) {
-      var ledRef = firebase.database().ref('led' + led);
-      ledRef.once('value').then(function(snapshot) {
-        var currentState = snapshot.val();
-        ledRef.set(!currentState);
-      });
-}
-*/
+    
+ // '}' is removed from here.....
+    
 function toggleValue(key) {
       const ref = database.ref(key);
       ref.once('value').then((snapshot) => {
