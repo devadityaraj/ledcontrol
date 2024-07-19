@@ -1,3 +1,9 @@
+//Author - Aditya Raj
+//Only for ESP-8266 ONLY...
+//If needed Change The libraries compatible with ESP32...
+//button controls will be added soon
+
+
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 
@@ -48,7 +54,7 @@ digitalWrite(LED3_PIN, LOW);
   auth.user.password = USER_PASSWORD;
   Firebase.begin(&config, &auth);
 
- /*
+ /* //Not Working....
  Firebase.setInt("led1", ledState1);
   Firebase.setInt("led2", ledState2);
   Firebase.setInt("led3", ledState3);
