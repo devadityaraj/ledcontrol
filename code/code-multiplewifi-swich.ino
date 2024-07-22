@@ -15,8 +15,8 @@ struct WiFiCredentials {
 // List of Wi-Fi networks to try 
 //add only three if you have to add more than change the code i < 3 in connecttowifi....
 WiFiCredentials wifiNetworks[] = {
-  {"Galgotias-H", ""},
   {"Aditya-Desk", "12312345"},
+  {"Galgotias-H", ""},
   {"GCET-122", "korean@122"}
 };
 
@@ -52,13 +52,13 @@ unsigned long lastDebounceTime3 = 0;
 unsigned long debounceDelay = 50;
 
 void connectToWiFi() {
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 3; i++) { //too add more or less ssid, change the number 3
     WiFi.begin(wifiNetworks[i].ssid, wifiNetworks[i].password);
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(wifiNetworks[i].ssid);
 
     int timeout = 0;
-    while (WiFi.status() != WL_CONNECTED && timeout < 30) {
+    while (WiFi.status() != WL_CONNECTED && timeout < 20) {
       delay(500);
       Serial.print(".");
       timeout++;
@@ -138,11 +138,10 @@ void loop() {
       digitalWrite(LED1_PIN, value1 ? HIGH : LOW);
       ledState1 = value1;
     } else {
-      Serial.println("Data type is not an integer for /value1");
+      //not integer
     }
   } else {
-    Serial.print("Failed to get value1: ");
-    Serial.println(fbdo.errorReason());
+   //failed connection
   }
 
   // Check and control LED2
@@ -152,11 +151,10 @@ void loop() {
       digitalWrite(LED2_PIN, value2 ? HIGH : LOW);
       ledState2 = value2;
     } else {
-      Serial.println("Data type is not an integer for /value2");
+     //not integer
     }
   } else {
-    Serial.print("Failed to get value2: ");
-    Serial.println(fbdo.errorReason());
+    //failed connection
   }
 
   // Check and control LED3
@@ -166,11 +164,10 @@ void loop() {
       digitalWrite(LED3_PIN, value3 ? HIGH : LOW);
       ledState3 = value3;
     } else {
-      Serial.println("Data type is not an integer for /value3");
+     //not integer
     }
   } else {
-    Serial.print("Failed to get value3: ");
-    Serial.println(fbdo.errorReason());
+    //failed connection
   }
 
   // Handle button presses
@@ -185,7 +182,7 @@ void loop() {
   if ((millis() - lastDebounceTime1) > debounceDelay) {
     if (button1State == LOW) {
       ledState1 = !ledState1;
-      digitalWrite(LED1_PIN, ledState1 ? HIGH : LOW);
+      digitalWrite(LED1_PIN, ledState1 ? 1 : 0);
       updateFirebase();
     }
   }
@@ -198,7 +195,7 @@ void loop() {
   if ((millis() - lastDebounceTime2) > debounceDelay) {
     if (button2State == LOW) {
       ledState2 = !ledState2;
-      digitalWrite(LED2_PIN, ledState2 ? HIGH : LOW);
+      digitalWrite(LED2_PIN, ledState2 ? 1 : 0);
       updateFirebase();
     }
   }
@@ -211,11 +208,11 @@ void loop() {
   if ((millis() - lastDebounceTime3) > debounceDelay) {
     if (button3State == LOW) {
       ledState3 = !ledState3;
-      digitalWrite(LED3_PIN, ledState3 ? HIGH : LOW);
+      digitalWrite(LED3_PIN, ledState3 ? 1 : 0);
       updateFirebase();
     }
   }
   lastButton3State = button3State;
 
-  delay(200); // Adjust the delay as needed
+  delay(500); // Adjust the delay as needed
 }
