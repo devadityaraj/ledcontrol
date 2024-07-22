@@ -24,7 +24,7 @@ FirebaseConfig config;
 
 const int LED1_PIN = D1;
 const int LED2_PIN = D2;
-const int LED3_PIN = D4;  //change to D3
+const int LED3_PIN = D3;  //change to D4 for inbuilt LED
 
 FirebaseData firebaseData;
 
