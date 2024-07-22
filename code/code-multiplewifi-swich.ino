@@ -38,13 +38,13 @@ const int BUTTON1_PIN = D5;
 const int BUTTON2_PIN = D6;
 const int BUTTON3_PIN = D7;
 
-bool ledState1 = 0;
-bool ledState2 = 0;
-bool ledState3 = 0;
+int ledState1 = 0;
+int ledState2 = 0;
+int ledState3 = 0;
 
-bool lastButton1State = HIGH;
-bool lastButton2State = HIGH;
-bool lastButton3State = HIGH;
+int lastButton1State = HIGH;
+int lastButton2State = HIGH;
+int lastButton3State = HIGH;
 
 unsigned long lastDebounceTime1 = 0;
 unsigned long lastDebounceTime2 = 0;
@@ -52,7 +52,7 @@ unsigned long lastDebounceTime3 = 0;
 unsigned long debounceDelay = 50;
 
 void connectToWiFi() {
-  for (int i = 0; i < 3; i++) { //too add more or less ssid, change the number 3
+  for (int i = 0; i < 3; i++) { //to add more or less ssid, change the number 3
     WiFi.begin(wifiNetworks[i].ssid, wifiNetworks[i].password);
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(wifiNetworks[i].ssid);
@@ -116,17 +116,18 @@ void setup() {
   Firebase.begin(&config, &auth);
 
   if (WiFi.status() == WL_CONNECTED) {
-    Firebase.getBool(fbdo, "/Value1");
-    ledState1 = fbdo.intData();
-    digitalWrite(LED1_PIN, ledState1 ? HIGH : LOW);
-
-    Firebase.getBool(fbdo, "/Value2");
-    ledState2 = fbdo.intData();
-    digitalWrite(LED2_PIN, ledState2 ? HIGH : LOW);
-
-    Firebase.getBool(fbdo, "/Value3");
-    ledState3 = fbdo.intData();
-    digitalWrite(LED3_PIN, ledState3 ? HIGH : LOW);
+    if (Firebase.getInt(fbdo, "/Value1")) {
+      ledState1 = fbdo.intData();
+      digitalWrite(LED1_PIN, ledState1 ? HIGH : LOW);
+    }
+    if (Firebase.getInt(fbdo, "/Value2")) {
+      ledState2 = fbdo.intData();
+      digitalWrite(LED2_PIN, ledState2 ? HIGH : LOW);
+    }
+    if (Firebase.getInt(fbdo, "/Value3")) {
+      ledState3 = fbdo.intData();
+      digitalWrite(LED3_PIN, ledState3 ? HIGH : LOW);
+    }
   }
 }
 
@@ -137,11 +138,7 @@ void loop() {
       int value1 = fbdo.intData();
       digitalWrite(LED1_PIN, value1 ? HIGH : LOW);
       ledState1 = value1;
-    } else {
-      //not integer
     }
-  } else {
-   //failed connection
   }
 
   // Check and control LED2
@@ -150,11 +147,7 @@ void loop() {
       int value2 = fbdo.intData();
       digitalWrite(LED2_PIN, value2 ? HIGH : LOW);
       ledState2 = value2;
-    } else {
-     //not integer
     }
-  } else {
-    //failed connection
   }
 
   // Check and control LED3
@@ -163,11 +156,7 @@ void loop() {
       int value3 = fbdo.intData();
       digitalWrite(LED3_PIN, value3 ? HIGH : LOW);
       ledState3 = value3;
-    } else {
-     //not integer
     }
-  } else {
-    //failed connection
   }
 
   // Handle button presses
@@ -182,7 +171,7 @@ void loop() {
   if ((millis() - lastDebounceTime1) > debounceDelay) {
     if (button1State == LOW) {
       ledState1 = !ledState1;
-      digitalWrite(LED1_PIN, ledState1 ? 1 : 0);
+      digitalWrite(LED1_PIN, ledState1 ? HIGH : LOW);
       updateFirebase();
     }
   }
@@ -195,7 +184,7 @@ void loop() {
   if ((millis() - lastDebounceTime2) > debounceDelay) {
     if (button2State == LOW) {
       ledState2 = !ledState2;
-      digitalWrite(LED2_PIN, ledState2 ? 1 : 0);
+      digitalWrite(LED2_PIN, ledState2 ? HIGH : LOW);
       updateFirebase();
     }
   }
@@ -208,11 +197,11 @@ void loop() {
   if ((millis() - lastDebounceTime3) > debounceDelay) {
     if (button3State == LOW) {
       ledState3 = !ledState3;
-      digitalWrite(LED3_PIN, ledState3 ? 1 : 0);
+      digitalWrite(LED3_PIN, ledState3 ? HIGH : LOW);
       updateFirebase();
     }
   }
   lastButton3State = button3State;
 
-  delay(500); // Adjust the delay as needed
+  delay(100); // Adjust the delay as needed
 }
