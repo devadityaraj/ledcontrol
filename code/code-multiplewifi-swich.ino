@@ -17,7 +17,7 @@ struct WiFiCredentials {
 WiFiCredentials wifiNetworks[] = {
   {"Aditya-Desk", "12312345"},
   {"Galgotias-H", ""},
-  {"GCET-122", "korean@122"}
+  {"GCET-122", "gcet@112"}
 };
 
 // Firebase credentials
